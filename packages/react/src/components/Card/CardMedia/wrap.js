@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from "styled-components";
 
-import { media, isLarge } from '../../../utils'
-import { loadingOverlay } from './loader'
+import { media, isLarge } from "../../../utils";
+import { loadingOverlay } from "./loader";
 
 const largeStyle = css`
   flex: 1;
@@ -9,13 +9,16 @@ const largeStyle = css`
   &::before {
     padding-bottom: 0;
   }
-`
+`;
 
 const mobileStyle = media.mobile`
   flex: 0 0 92px;
-`
+`;
 
-export default styled('div')`
+export default styled("div")`
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 5px;
   background: #e1e8ed no-repeat center center / cover;
   display: block;
   flex: 0 0 125px;
@@ -25,11 +28,10 @@ export default styled('div')`
   transition: flex-basis 0.25s ease-in-out;
 
   &::before {
-    content: '';
+    content: "";
     padding-bottom: 100%;
     display: block;
   }
 
-  ${loadingOverlay} ${({ cardSize }) =>
-  isLarge(cardSize) ? largeStyle : mobileStyle};
-`
+  ${loadingOverlay} ${({ cardSize }) => (isLarge(cardSize) ? largeStyle : mobileStyle)};
+`;

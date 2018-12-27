@@ -1,9 +1,9 @@
-import { createElement } from 'react'
-import styled, { css } from 'styled-components'
+import { createElement } from "react";
+import styled, { css } from "styled-components";
 
-import { media, isLarge } from '../../utils'
+import { media, isLarge } from "../../utils";
 
-const HEIGHT = '382px'
+const HEIGHT = "382px";
 
 const contrastStyle = ({ backgroundColor, color }) => css`
   background-color: ${backgroundColor};
@@ -17,7 +17,7 @@ const contrastStyle = ({ backgroundColor, color }) => css`
   &:hover {
     filter: brightness(90%);
   }
-`
+`;
 
 const largeStyle = css`
   flex-direction: column;
@@ -27,7 +27,7 @@ const largeStyle = css`
   ${media.mobile`
     height: calc(${HEIGHT} * 7/9);
   `};
-`
+`;
 
 const hoverStyle = css`
   transition-property: background, border-color;
@@ -35,22 +35,20 @@ const hoverStyle = css`
     background: #f5f8fa;
     border-color: rgba(136, 153, 166, 0.5);
   }
-`
+`;
 
 const reverseStyle = ({ cardSize }) => css`
-  flex-direction: ${isLarge(cardSize) ? 'column-reverse' : 'row-reverse'};
-`
+  flex-direction: ${isLarge(cardSize) ? "column-reverse" : "row-reverse"};
+`;
 
 const baseStyle = css`
-  max-width: 500px;
+  max-width: 100px;
   background-color: #fff;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #e1e8ed;
   overflow: hidden;
   color: #181919;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: flex;
+  flex-direction: column;
   text-decoration: none;
   opacity: 1;
   position: relative;
@@ -62,7 +60,7 @@ const baseStyle = css`
   &:hover {
     outline: 0;
   }
-`
+`;
 
 const createEl = ({ as }) =>
   styled(as)(
@@ -70,26 +68,24 @@ const createEl = ({ as }) =>
     ({ loading, contrast }) => !loading && !contrast && hoverStyle,
     ({ cardSize }) => isLarge(cardSize) && largeStyle,
     ({ reverse }) => reverse && reverseStyle,
-    ({ backgroundColor, color, contrast }) =>
-      contrast && color && backgroundColor && contrastStyle,
-    ({ backgroundColor, color, contrast }) =>
-      contrast && (!color || !backgroundColor) && hoverStyle
-  )
+    ({ backgroundColor, color, contrast }) => contrast && color && backgroundColor && contrastStyle,
+    ({ backgroundColor, color, contrast }) => contrast && (!color || !backgroundColor) && hoverStyle
+  );
 
-const CACHE = {}
+const CACHE = {};
 
 const CardWrap = ({ rel, href, target, ...props }) => {
-  const key = JSON.stringify({ ...props, children: undefined })
+  const key = JSON.stringify({ ...props, children: undefined });
   return createElement(
     CACHE[key] || (CACHE[key] = createEl(props)),
-    props.as === 'a' ? { href, rel, target, ...props } : props
-  )
-}
+    props.as === "a" ? { href, rel, target, ...props } : props
+  );
+};
 
 CardWrap.defaultProps = {
-  as: 'a',
-  rel: 'noopener noreferrer',
-  target: '_blank'
-}
+  as: "a",
+  rel: "noopener noreferrer",
+  target: "_blank"
+};
 
-export default CardWrap
+export default CardWrap;

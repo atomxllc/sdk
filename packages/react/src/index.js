@@ -1,7 +1,7 @@
-import React, { Fragment, Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment, Component } from "react";
+import PropTypes from "prop-types";
 
-import { CardWrap, CardMedia, CardContent, CardEmpty } from './components/Card'
+import { CardWrap, CardMedia, CardContent, CardEmpty } from "./components/Card";
 import {
   defaultApiParameters,
   isNil,
@@ -12,7 +12,7 @@ import {
   imageProxy,
   someProp,
   isFunction
-} from './utils'
+} from "./utils";
 
 const Card = ({
   image,
@@ -40,45 +40,42 @@ const Card = ({
       playsInline={playsInline}
     />
     <CardContent
-      className='microlink_card__content'
+      className="microlink_card__content"
       title={title}
       description={description}
       url={url}
       cardSize={size}
     />
   </Fragment>
-)
+);
 
 class Microlink extends Component {
-  state = { loading: true }
+  state = { loading: true };
 
-  componentDidMount () {
-    this.fetchData()
+  componentDidMount() {
+    this.fetchData();
   }
 
-  componentDidUpdate (prevProps) {
-    if (prevProps.url !== this.props.url) this.fetchData()
+  componentDidUpdate(prevProps) {
+    if (prevProps.url !== this.props.url) this.fetchData();
   }
 
   fetchData = () => {
-    const { noFetch, url } = this.props
-    const fetch =
-      noFetch || !url ? Promise.resolve({}) : fetchFromApi(this.props)
-    fetch.then(({ data }) => this.mergeData(data))
-  }
+    const { noFetch, url } = this.props;
+    const fetch = noFetch || !url ? Promise.resolve({}) : fetchFromApi(this.props);
+    fetch.then(({ data }) => this.mergeData(data));
+  };
 
   mergeData = fetchData => {
-    const { setData } = this.props
-    const imagesProps = [].concat(this.props.image)
+    const { setData } = this.props;
+    const imagesProps = [].concat(this.props.image);
 
-    const payload = isFunction(setData)
-      ? setData(fetchData)
-      : { ...fetchData, ...setData }
+    const payload = isFunction(setData) ? setData(fetchData) : { ...fetchData, ...setData };
 
-    const image = someProp(payload, imagesProps)
-    const imageUrl = getUrlPath(image)
-    const { title, description, url, video } = payload
-    const { color, background_color: backgroundColor } = image || {}
+    const image = someProp(payload, imagesProps);
+    const imageUrl = getUrlPath(image);
+    const { title, description, url, video } = payload;
+    const { color, background_color: backgroundColor } = image || {};
 
     this.setState({
       color,
@@ -89,10 +86,10 @@ class Microlink extends Component {
       loading: false,
       video,
       image: imageUrl
-    })
-  }
+    });
+  };
 
-  render () {
+  render() {
     const {
       title,
       color,
@@ -102,7 +99,7 @@ class Microlink extends Component {
       description,
       image,
       video
-    } = this.state
+    } = this.state;
 
     const {
       autoPlay,
@@ -114,12 +111,12 @@ class Microlink extends Component {
       size,
       loading: loadingProp,
       ...props
-    } = this.props
-    const loading = isNil(loadingProp) ? loadingState : loadingProp
+    } = this.props;
+    const loading = isNil(loadingProp) ? loadingState : loadingProp;
 
     return (
       <CardWrap
-        className={className ? `microlink_card ${className}` : 'microlink_card'}
+        className={className ? `microlink_card ${className}` : "microlink_card"}
         href={url}
         title={title}
         cardSize={size}
@@ -146,7 +143,7 @@ class Microlink extends Component {
           />
         )}
       </CardWrap>
-    )
+    );
   }
 }
 
@@ -154,14 +151,14 @@ Microlink.defaultProps = {
   apiKey: undefined,
   autoPlay: true,
   controls: true,
-  image: ['screenshot', 'image', 'logo'],
+  image: ["screenshot", "image", "logo"],
   loop: true,
   muted: true,
   playsInline: true,
   reverse: false,
-  size: 'normal',
+  size: "normal",
   ...defaultApiParameters
-}
+};
 
 Microlink.propTypes = {
   apiKey: PropTypes.string,
@@ -169,20 +166,17 @@ Microlink.propTypes = {
   video: PropTypes.bool,
   contrast: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   controls: PropTypes.bool,
-  image: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
-  ]),
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   loop: PropTypes.bool,
   muted: PropTypes.bool,
   reverse: PropTypes.bool,
   playsInline: PropTypes.bool,
-  prerender: PropTypes.oneOf(['auto', true, false]),
+  prerender: PropTypes.oneOf(["auto", true, false]),
   screenshot: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  size: PropTypes.oneOf(['normal', 'large']),
+  size: PropTypes.oneOf(["normal", "large"]),
   url: PropTypes.string
-}
+};
 
-export { imageProxy, createApiUrl, fetchFromApiUrl, fetchFromApi }
+export { imageProxy, createApiUrl, fetchFromApiUrl, fetchFromApi };
 
-export default Microlink
+export default Microlink;

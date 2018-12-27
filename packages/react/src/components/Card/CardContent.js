@@ -34,7 +34,7 @@ export const Content = styled('div')`
   justify-content: space-around;
   flex-direction: column;
   flex: 1;
-  padding: 10px 15px;
+  padding: 2px 0;
   min-width: 0;
   box-sizing: border-box;
   ${({ cardSize }) => isLarge(cardSize) && largeContentStyle};
@@ -42,7 +42,7 @@ export const Content = styled('div')`
 
 const Header = styled('header')`
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   margin: 0;
   flex-grow: 1.2;
