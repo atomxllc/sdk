@@ -12,7 +12,7 @@ packages/vanilla/*/microlink.min.js
 packages/vanilla/*/microlink.min.js.map
 /build
 storybook-static
-lib
+# lib
 
 # misc
 .DS_Store
