@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import NanoClamp from 'nanoclamp'
+import React from "react";
+import styled from "styled-components";
+// import NanoClamp from "nanoclamp";
 
 const Clamp = ({ children, className, lines }) => (
-  <NanoClamp className={className} lines={lines} text={children} is='p' />
-)
+  <div className={className}>{children.substring(0, lines * 10) + '...'}</div>
+);
 
 const CardText = styled(Clamp)`
   &&& {
@@ -14,6 +14,6 @@ const CardText = styled(Clamp)`
     color: inherit;
     margin: 0;
   }
-`
+`;
 
-export default CardText
+export default CardText;
