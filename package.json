@@ -1,85 +1,124 @@
 {
-  "name": "@microlink/root",
+  "name": "@microlink/react",
   "description": "Convert your links into beautiful previews",
-  "homepage": "https://github.com/microlinkhq/sdk#readme",
-  "version": "2.3.0",
-  "author": {
-    "email": "josefrancisco.verdu@gmail.com",
-    "name": "Kiko Beats",
-    "url": "https://github.com/Kikobeats"
-  },
-  "contributors": [
-    {
-      "name": "Brad Adams",
-      "email": "hi@breadadams.com"
-    },
-    {
-      "name": "Pierre Lebrun",
-      "email": "anthonylebrun@gmail.com"
-    }
-  ],
+  "homepage": "https://microlink.js.org",
+  "version": "3.0.5",
+  "main": "lib/index.js",
+  "module": "lib/index.m.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microlinkhq/sdk.git"
+    "url": "git+https://github.com/microlinkhq/sdk/tree/master/packages/react"
   },
   "bugs": {
     "url": "https://github.com/microlinkhq/sdk/issues"
   },
+  "keywords": [
+    "data",
+    "extraction",
+    "link",
+    "microlink",
+    "preview",
+    "previsualization"
+  ],
+  "dependencies": {
+    "nanoclamp": "~1.2.7"
+  },
   "devDependencies": {
-    "@commitlint/cli": "latest",
-    "@commitlint/config-conventional": "latest",
-    "eachdir": "latest",
+    "@babel/cli": "latest",
+    "@babel/core": "latest",
+    "@babel/plugin-proposal-class-properties": "latest",
+    "@babel/plugin-proposal-object-rest-spread": "latest",
+    "@babel/plugin-transform-react-constant-elements": "latest",
+    "@babel/plugin-transform-react-inline-elements": "latest",
+    "@babel/preset-env": "latest",
+    "@babel/preset-react": "latest",
+    "@storybook/addon-a11y": "latest",
+    "@storybook/addon-options": "latest",
+    "@storybook/addon-storyshots": "latest",
+    "@storybook/addon-viewport": "latest",
+    "@storybook/react": "latest",
+    "babel-core": "~7.0.0-bridge.0",
+    "babel-eslint": "latest",
+    "babel-loader": "latest",
+    "babel-plugin-transform-react-pure-class-to-function": "latest",
+    "babel-plugin-transform-react-remove-prop-types": "latest",
+    "enzyme": "latest",
+    "enzyme-adapter-react-16": "latest",
+    "eslint-plugin-jsx-a11y": "latest",
     "finepack": "latest",
-    "git-authors-cli": "latest",
     "husky": "latest",
-    "lerna": "latest",
-    "lint-staged": "latest",
-    "npm-check-updates": "latest",
+    "jest": "latest",
+    "jest-environment-enzyme": "latest",
+    "jest-enzyme": "latest",
+    "microbundle": "latest",
     "prettier-standard": "latest",
+    "prop-types": "latest",
+    "react": "^16",
+    "react-dom": "^16",
+    "size-limit": "latest",
     "standard": "latest",
-    "standard-markdown": "latest",
-    "standard-version": "latest"
+    "storybook-addon-jsx": "latest",
+    "styled-components": "^4",
+    "unfetch": "latest"
   },
   "engines": {
     "node": ">= 8"
   },
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "build": "lerna run build",
-    "clean": "cd packages && eachdir rm -rf node_modules && cd .. && rm -rf node_modules",
-    "lint": "standard-markdown README.md && standard src",
-    "postinstall": "lerna bootstrap",
-    "prepublishOnly": "lerna run build",
-    "prerelease": "npm run update:check",
+    "build": "npm run build:babel && npm run build:microbundle",
+    "build-storybook": "NODE_ENV=production build-storybook",
+    "build:babel": "NODE_ENV=production BABEL_ENV=production babel src -d lib",
+    "build:microbundle": "NODE_ENV=production microbundle build --target browser --entry lib/index.js --format es,cjs",
+    "dev": "start-storybook -p 6006",
+    "format": "prettier-standard index.js {src,stories,.storybook}/**/*.js --single-quote",
+    "lint": "standard",
+    "posttest": "npm run size",
+    "prepublishOnly": "npm run build",
     "pretest": "npm run lint",
-    "preversion": "git-authors-cli",
-    "release": "lerna publish --sort --conventional-commits",
-    "test": "lerna exec npm run test",
-    "update": "lerna exec ncu -a",
-    "update:check": "lerna exec ncu --  --error-level 2"
+    "size": "npm run build && size-limit",
+    "start": "node scripts/start.js",
+    "test": "jest --detectOpenHandles"
   },
-  "private": true,
   "license": "MIT",
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+  "jest": {
+    "setupTestFrameworkScriptFile": "jest-enzyme",
+    "testEnvironment": "enzyme",
+    "testURL": "http://localhost/",
+    "verbose": true
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
+  "peerDependencies": {
+    "react": ">= 16 < 17",
+    "styled-components": "4"
   },
-  "lint-staged": {
-    "linters": {
-      "*.js": [
-        "prettier-standard",
-        "git add"
+  "publishConfig": {
+    "access": "public"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  },
+  "size-limit": [
+    {
+      "path": [
+        "./lib/index.js",
+        "./lib/index.m.js"
       ],
-      "package.json": [
-        "finepack",
-        "git add"
-      ]
+      "limit": "50 kB"
     }
+  ],
+  "standard": {
+    "globals": [
+      "fetch"
+    ],
+    "ignore": [
+      "/lib/",
+      "/storybook-static/"
+    ],
+    "parser": "babel-eslint",
+    "plugins": [
+      "jsx-a11y"
+    ]
   }
 }
