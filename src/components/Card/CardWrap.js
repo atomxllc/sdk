@@ -42,7 +42,8 @@ const reverseStyle = ({ cardSize }) => css`
 `;
 
 const baseStyle = css`
-  max-width: 100px;
+  width: 100px;
+  min-height: 100px;
   background-color: #fff;
   overflow: hidden;
   color: #181919;
@@ -68,8 +69,10 @@ const createEl = ({ as }) =>
     ({ loading, contrast }) => !loading && !contrast && hoverStyle,
     ({ cardSize }) => isLarge(cardSize) && largeStyle,
     ({ reverse }) => reverse && reverseStyle,
-    ({ backgroundColor, color, contrast }) => contrast && color && backgroundColor && contrastStyle,
-    ({ backgroundColor, color, contrast }) => contrast && (!color || !backgroundColor) && hoverStyle
+    ({ backgroundColor, color, contrast }) =>
+      contrast && color && backgroundColor && contrastStyle,
+    ({ backgroundColor, color, contrast }) =>
+      contrast && (!color || !backgroundColor) && hoverStyle
   );
 
 const CACHE = {};
