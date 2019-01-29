@@ -62,7 +62,8 @@ class Microlink extends Component {
 
   fetchData = () => {
     const { noFetch, url } = this.props;
-    const fetch = noFetch || !url ? Promise.resolve({}) : fetchFromApi(this.props);
+    const fetch =
+      noFetch || !url ? Promise.resolve({}) : fetchFromApi(this.props);
     fetch.then(({ data }) => this.mergeData(data));
   };
 
@@ -70,7 +71,9 @@ class Microlink extends Component {
     const { setData } = this.props;
     const imagesProps = [].concat(this.props.image);
 
-    const payload = isFunction(setData) ? setData(fetchData) : { ...fetchData, ...setData };
+    const payload = isFunction(setData)
+      ? setData(fetchData)
+      : { ...fetchData, ...setData };
 
     const image = someProp(payload, imagesProps);
     const imageUrl = getUrlPath(image);
@@ -166,7 +169,10 @@ Microlink.propTypes = {
   video: PropTypes.bool,
   contrast: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   controls: PropTypes.bool,
-  image: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  image: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
   loop: PropTypes.bool,
   muted: PropTypes.bool,
   reverse: PropTypes.bool,
@@ -174,7 +180,8 @@ Microlink.propTypes = {
   prerender: PropTypes.oneOf(["auto", true, false]),
   screenshot: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   size: PropTypes.oneOf(["normal", "large"]),
-  url: PropTypes.string
+  url: PropTypes.string,
+  onDeleteClick: PropTypes.func
 };
 
 export { imageProxy, createApiUrl, fetchFromApiUrl, fetchFromApi };
